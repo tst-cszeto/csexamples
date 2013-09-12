@@ -1,0 +1,16 @@
+<br/>
+<div ng-controller="ListenMessageCtrl" ng-init="init(nextViewId)">
+  <fieldset>
+    <legend>Listen for messages</legend>
+    <p>Listen for incoming messages on a specific channel</p>
+    <label>Channel Name:</label>
+    <input ng-model="channelName">
+    <br>
+    <label>Messages:</label>
+    <textarea ng-model="content"></textarea>
+    <br>
+    <button ng-disabled="listening" ng-click="listenMessage()">Start</button>
+    <button ng-disabled="!listening" ng-click="stopListenMessage()">Stop</button>
+    <button ng-click="closeMqView(viewId)">Close</button>
+  </fieldset>
+</div>

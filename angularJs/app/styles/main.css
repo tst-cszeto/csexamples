@@ -1,0 +1,43 @@
+body {
+    background: #fafafa;
+    color: #333;
+}
+
+.hero-unit {
+    margin: 50px auto 0 auto;
+    width: 510px;
+    font-size: 18px;
+    font-weight: 200;
+    line-height: 30px;
+    background-color: #eee;
+    border-radius: 6px;
+    padding: 60px;
+}
+
+.hero-unit h1 {
+    font-size: 60px;
+    line-height: 1;
+    letter-spacing: -1px;
+}
+
+fieldset {
+	border-width:2px;
+	border-style:solid;
+	border-color:black;
+	position:relative;
+	display:block;
+}
+
+fieldset legend{	
+	border-width:2px;
+	border-style:solid;
+	border-color:#7c5b47;
+	font-weight:bold;
+	font-variant:small-caps;
+	padding:2px 5px;
+	margin:0px 0px 10px 0px;
+}
+
+label {
+	display:block;
+}

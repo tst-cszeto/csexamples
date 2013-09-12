@@ -1,0 +1,15 @@
+<br/>
+<div ng-controller="ChannelStatusCtrl" ng-init="init(nextViewId)">
+  <fieldset>
+    <legend>Channel Status</legend>
+    <p>Allows you get a quick status of who's listening on a channel</p>
+    <label>Channel Name:</label>
+    <input ng-model="channelName">
+    <br>
+    <label>Status:</label>
+    <textarea ng-model="status"></textarea>
+    <br>
+    <button ng-click="getChannelStatus()">Query</button>
+    <button ng-click="closeMqView(viewId)">Close</button>
+  </fieldset>
+</div>

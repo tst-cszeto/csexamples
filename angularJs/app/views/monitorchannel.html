@@ -1,0 +1,16 @@
+<br/>
+<div ng-controller="MonitorChannelCtrl" ng-init="init(nextViewId)">
+  <fieldset>
+    <legend>Monitor Channel</legend>
+    <p>Similar to get channel status except continuously listen</p>
+    <label>Channel Name:</label>
+    <input ng-model="channelName">
+    <br>
+    <label>Status:</label>
+    <textarea ng-model="content"></textarea>
+    </br>
+    <button ng-disabled="monitoring" ng-click="monitorChannel()">Start</button>
+    <button ng-disabled="!monitoring" ng-click="stopMonitorChannel()">Stop</button>
+    <button ng-click="closeMqView(viewId)">Close</button>
+  </fieldset>
+</div>
