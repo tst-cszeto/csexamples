@@ -1,19 +1,35 @@
 'use strict'
 
-describe 'Controller: MonitorchannelCtrl', () ->
+describe 'Controller: MonitorChannelCtrl', () ->
 
   # load the controller's module
   beforeEach module 'CSExamplesApp'
 
-  MonitorchannelCtrl = {}
+  MonitorChannelCtrl = {}
   scope = {}
 
   # Initialize the controller and a mock scope
   beforeEach inject ($controller, $rootScope) ->
     scope = $rootScope.$new()
-    MonitorchannelCtrl = $controller 'MonitorchannelCtrl', {
+    MonitorChannelCtrl = $controller 'MonitorChannelCtrl', {
       $scope: scope
     }
+    fakeViewId = 1337
+    scope.init(fakeViewId)
+    scope.channelName = 'fakeChannel'
 
-  it 'should attach a list of awesomeThings to the scope', () ->
-    expect(scope.awesomeThings.length).toBe 3
+  it 'should be initialized with a viewId and defaults', ->
+    expect(scope.viewId).toBeDefined()
+    expect(scope.monitoring).toBe false
+    expect(scope.content).toBe ""
+
+  it 'should be able to listen for new messages', ->
+    scope.monitorChannel()
+    expect(scope.monitoring).toBe true
+    expect(scope.content.length).toBeGreaterThan 0
+
+  it 'should be able to stop listening for messages', ->
+    scope.monitorChannel()
+    scope.stopMonitorChannel()
+    expect(scope.monitoring).toBe false
+    expect(scope.content).toBe ""

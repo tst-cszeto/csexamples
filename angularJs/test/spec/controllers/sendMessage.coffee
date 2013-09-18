@@ -1,19 +1,26 @@
 'use strict'
 
-describe 'Controller: SendmessageCtrl', () ->
+describe 'Controller: SendMessageCtrl', () ->
 
   # load the controller's module
   beforeEach module 'CSExamplesApp'
 
-  SendmessageCtrl = {}
+  SendMessageCtrl = {}
   scope = {}
 
   # Initialize the controller and a mock scope
   beforeEach inject ($controller, $rootScope) ->
     scope = $rootScope.$new()
-    SendmessageCtrl = $controller 'SendmessageCtrl', {
+    SendMessageCtrl = $controller 'SendMessageCtrl', {
       $scope: scope
     }
+    fakeViewId = 1337
+    scope.init(fakeViewId)
 
-  it 'should attach a list of awesomeThings to the scope', () ->
-    expect(scope.awesomeThings.length).toBe 3
+  it 'should be initialized with a viewId', () ->
+    expect(scope.viewId).toBeDefined()
+
+  it 'should be able to send a message to a channel', () ->
+    scope.channelName = 'fakeChannel'
+    scope.content = 'fakeContent'
+    scope.sendMessage()

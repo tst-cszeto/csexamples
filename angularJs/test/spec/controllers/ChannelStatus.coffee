@@ -5,15 +5,24 @@ describe 'Controller: ChannelStatusCtrl', () ->
   # load the controller's module
   beforeEach module 'CSExamplesApp'
 
-  ChannelstatusCtrl = {}
+  ChannelStatusCtrl = {}
   scope = {}
 
   # Initialize the controller and a mock scope
   beforeEach inject ($controller, $rootScope) ->
     scope = $rootScope.$new()
-    ChannelstatusCtrl = $controller 'ChannelstatusCtrl', {
+    ChannelStatusCtrl = $controller 'ChannelStatusCtrl', {
       $scope: scope
     }
+    fakeViewId = 1337
+    scope.init(fakeViewId)
+    scope.channelName = 'fakeChannel'
 
-  it 'should attach a list of awesomeThings to the scope', () ->
-    expect(scope.awesomeThings.length).toBe 3
+  it 'should be initialized with a viewId', () ->
+    expect(scope.viewId).toBeDefined()
+
+  it 'should be able to get channel status', () ->
+    expect(scope.status).toBeUndefined()
+    scope.channelName = 'fakeChannel'
+    scope.getChannelStatus()
+    expect(scope.status).toBeDefined()

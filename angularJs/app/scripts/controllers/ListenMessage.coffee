@@ -16,4 +16,3 @@ angular.module('CSExamplesApp')
       $scope.listening = false
       $scope.content = ""
       MockMQService.stopListenChannel($scope.channelName)
-
