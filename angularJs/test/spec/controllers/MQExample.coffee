@@ -22,7 +22,7 @@ describe 'Controller: MQExampleCtrl', () ->
     expect(scope.actions.length).toBe 4
 
   it 'should be able to add a new mqView', ->
-    viewId = scope.nextViewId
+    viewId = scope.nextViewId + 1
     fakeAction = scope.actions[0]
     scope.addMQView(fakeAction)
 

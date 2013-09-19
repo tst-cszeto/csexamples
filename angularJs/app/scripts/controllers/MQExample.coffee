@@ -14,8 +14,7 @@ angular.module('CSExamplesApp')
     ]
 
     $scope.addMQView = (action)=>
-      $scope.mqViews[$scope.nextViewId] = { url: action.url }
-      $scope.nextViewId++
+      $scope.mqViews[++$scope.nextViewId] = { url: action.url }
 
     $scope.closeMqView = (viewId) -> delete $scope.mqViews[viewId]
 
