@@ -7,10 +7,8 @@ Core services examples written in angularJS.
 + yeoman - http://yeoman.io/
 
 ##Installation:
-+ Initialize all the dependencies: `npm install`
-+ Install missing dependency: `bower install jquery`.
-  Dunno why this isn't hooked up nor am I sure what
-  it's being used for...
++ Install all the nodejs dependencies: `npm install`.  Required to run things like `yo`, `grunt`, `bower`, `karma`, etc.
++ Install all the bower dependencies: `bower update`.  Grabs things like angularJs, jQuery, etc.
 + Launch web server and other common processes: `grunt server`
 
 ##Testing:
