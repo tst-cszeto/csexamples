@@ -1,8 +1,10 @@
 'use strict'
 
 angular.module('CSExamplesApp')
-  .controller 'ChannelStatusCtrl', ($scope, MockMQService) ->
+  .controller 'ChannelStatusCtrl', ($scope, MqService) ->
     $scope.init = (id)-> $scope.viewId = id
     $scope.getChannelStatus = ->
-      callback = (message) => $scope.status = message
-      MockMQService.getChannelStatus($scope.channelName, callback)
+      callback = (message) =>
+        $scope.status = angular.toJson(message, true)
+        $scope.$apply()
+      MqService.getChannelStatus($scope.channelName, callback)

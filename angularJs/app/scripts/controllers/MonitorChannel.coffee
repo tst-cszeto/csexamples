@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module('CSExamplesApp')
-  .controller 'MonitorChannelCtrl', ($scope, MockMQService) ->
+  .controller 'MonitorChannelCtrl', ($scope, MqService) ->
     $scope.init = (id)-> 
       $scope.viewId = id
       $scope.monitoring = false
@@ -9,10 +9,12 @@ angular.module('CSExamplesApp')
 
     $scope.monitorChannel = ->
       $scope.monitoring = true
-      callback = (message) => $scope.content= message
-      MockMQService.monitorChannel($scope.channelName, callback)
+      $scope.statusCallback = (message) =>
+        $scope.content= message.content
+        $scope.$apply()
+      MqService.monitorChannelStatus($scope.channelName, $scope.statusCallback)
 
     $scope.stopMonitorChannel = ->
       $scope.monitoring = false
       $scope.content = ""
-      MockMQService.stopMonitorChannel($scope.channelName)
+      MqService.stopMonitorChannelStatus($scope.channelName, $scope.statusCallback)

@@ -9,10 +9,11 @@ describe 'Controller: MonitorChannelCtrl', () ->
   scope = {}
 
   # Initialize the controller and a mock scope
-  beforeEach inject ($controller, $rootScope) ->
+  beforeEach inject ($controller, $rootScope, MockMQService) ->
     scope = $rootScope.$new()
     MonitorChannelCtrl = $controller 'MonitorChannelCtrl', {
-      $scope: scope
+      $scope: scope,
+      MqService: MockMQService
     }
     fakeViewId = 1337
     scope.init(fakeViewId)

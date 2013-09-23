@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module('CSExamplesApp')
-  .controller 'ListenMessageCtrl', ($scope, MockMQService) ->
+  .controller 'ListenMessageCtrl', ($scope, MqService) ->
     $scope.init = (id)-> 
       $scope.viewId = id
       $scope.listening = false
@@ -9,10 +9,12 @@ angular.module('CSExamplesApp')
 
     $scope.listenMessage = ->
       $scope.listening = true
-      callback = (message) => $scope.content+= "\n#{message}"
-      MockMQService.listenChannel($scope.channelName, callback)
+      $scope.msgCallback = (message) =>
+        $scope.content+= "\n#{message.content}"
+        $scope.$apply()
+      MqService.listenChannel($scope.channelName, null, 0, $scope.msgCallback)
 
     $scope.stopListenMessage = ->
       $scope.listening = false
       $scope.content = ""
-      MockMQService.stopListenChannel($scope.channelName)
+      MqService.stopListenChannel($scope.channelName, $scope.msgCallback)

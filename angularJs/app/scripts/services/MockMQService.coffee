@@ -2,6 +2,7 @@
 
 angular.module('CSExamplesApp')
   .service 'MockMQService', ->
+    @userName = 'MockMQUser'
     @isConnected = false
     @connect = (url, callback) ->
       @url = url
@@ -15,7 +16,7 @@ angular.module('CSExamplesApp')
       callback()
 
     @getChannelStatus = (channelName, callback) ->
-      console.log("MockMQ=>querying MQ for status on channel: #{ channelName }")
+      console.log("MockMQ=> querying MQ for status on channel: #{ channelName }")
       fakeMsg = {
         consumerNames: ["fakeConsumer"]
         consumerCount: 1
@@ -25,10 +26,10 @@ angular.module('CSExamplesApp')
       }
       callback(angular.toJson(fakeMsg, true))
 
-    @sendMessage = (channelName, content) ->
-      console.log("MockMQ=>sending msg: #{ content } to MQ on channel: #{ channelName }")
+    @sendMessages = (channelName, messages, sourceName=@userName, isB64=0) ->
+      console.log("MockMQ=>sending msg: #{ messages } to MQ on channel: #{ channelName }")
 
-    @listenChannel = (channelName, callback) ->
+    @listenChannel = (channelName, consumerName=@userName, isB64=0, callback) ->
       console.log("MockMQ=> listening for msgs on: #{ channelName }")
       fakeMsg = {
         content: "this a test message"
@@ -38,12 +39,12 @@ angular.module('CSExamplesApp')
         channel: channelName
         contentIsBinary: false
       }
-      callback(angular.toJson(fakeMsg, true))
+      callback(fakeMsg)
 
-    @stopListenChannel = (channelName) ->
+    @stopListenChannel = (channelName, callback) ->
       console.log("MockMQ=> stop listening for msgs on: #{ channelName }")
 
-    @monitorChannel = (channelName, callback) ->
+    @monitorChannelStatus = (channelName, callback) ->
       console.log("MockMQ=> monitoring status on: #{ channelName }")
       fakeMsg = {
         content: "{\n \"consumerNames\": [\"test_page3\"],\n \"consumerCount\": 1,\n \"observerCount\": 0,\n \"channel\": \"some_channel_name\",\n \"observerNames\": []\n}",
@@ -53,7 +54,7 @@ angular.module('CSExamplesApp')
         channel: " #{ channelName } observer"
         contentIsBinary: false
       }
-      callback(angular.toJson(fakeMsg, true))
+      callback(fakeMsg)
 
-    @stopMonitorChannel = (channelName) ->
+    @stopMonitorChannelStatus = (channelName) ->
       console.log("MockMQ=> stop monitoring status on: #{ channelName }")

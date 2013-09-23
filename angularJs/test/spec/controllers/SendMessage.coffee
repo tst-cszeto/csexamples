@@ -9,10 +9,11 @@ describe 'Controller: SendMessageCtrl', () ->
   scope = {}
 
   # Initialize the controller and a mock scope
-  beforeEach inject ($controller, $rootScope) ->
+  beforeEach inject ($controller, $rootScope, MockMQService) ->
     scope = $rootScope.$new()
     SendMessageCtrl = $controller 'SendMessageCtrl', {
-      $scope: scope
+      $scope: scope,
+      MqService: MockMQService
     }
     fakeViewId = 1337
     scope.init(fakeViewId)
