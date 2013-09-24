@@ -2,20 +2,33 @@
 
 <div class="hero-unit">
   <h3>Message Queue Connector Libary Example</h1>
-  <div>
-    <label>Server WebSocket URL:</label>
-    <input ng-model="mqUrl">
-    <button ng-disabled="connected" ng-click="connectToMQ()">Connect</button>
-    <button ng-disabled="!connected" ng-click="disconnectFromMQ()">Disconnect</button>
+  <table>
+    <tr>
+      <td class="mqOptions">
+        <div>
+          <label>Server WebSocket URL:</label>
+          <input ng-model="mqUrl">
+          <button ng-disabled="connected" ng-click="connectToMQ()">Connect</button>
+          <button ng-disabled="!connected" ng-click="disconnectFromMQ()">Disconnect</button>
+        </div>
+      </td>
+      <td class="mqOptions">
+        <div ng-show="connected">
+          <label>Select an action:</label>
+          <select ng-model="selectedAction"
+                  ng-change="addMQView(selectedAction)"
+                  ng-options="action.text for action in actions">
+          </select><br>
+        </div>
+      </td>
+    </tr>
+  </table>
+  <div class="viewTable">
+    <table>
+      <tr>
+        <td ng-repeat="view in mqViews" ng-include="view.url" onload="onMQViewLoad()"></td>
+      </tr>
+    </table>
   </div>
-  <br>
-  <div ng-show="connected">
-    <label>Select an action:</label>
-    <select ng-model="selectedAction"
-            ng-change="addMQView(selectedAction)"
-            ng-options="action.text for action in actions">
-    </select><br>
-  </div>  
-  <div ng-repeat="view in mqViews" ng-include="view.url" onload="onMQViewLoad()"></div>
 </div>
 

@@ -7,7 +7,7 @@
     <input ng-model="channelName">
     <br>
     <label>Status:</label>
-    <textarea ng-model="content"></textarea>
+    <textarea ng-model="content" readonly></textarea>
     </br>
     <button ng-disabled="monitoring" ng-click="monitorChannel()">Start</button>
     <button ng-disabled="!monitoring" ng-click="stopMonitorChannel()">Stop</button>
