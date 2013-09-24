@@ -1,11 +1,11 @@
 'use strict'
 
 angular.module('CSExamplesApp') 
-  .controller 'MQExampleCtrl', ($scope, MockMQService) ->
+  .controller 'MQExampleCtrl', ($scope, MqService) ->
     $scope.mqUrl = 'ws://localhost:8884/mq'
     $scope.mqViews = {}
     $scope.nextViewId = 0
-    $scope.connected = MockMQService.isConnected
+    $scope.connected = MqService.isConnected()
     $scope.actions = [
       { text: 'Get channel status', url: '/views/channelstatus.html' }
       { text: 'Send messages', url: '/views/sendmessage.html' }
@@ -21,12 +21,14 @@ angular.module('CSExamplesApp')
     $scope.onMQViewLoad = ()=> $scope.selectedAction = ''      
 
     $scope.connectToMQ = =>
-      callback = => $scope.connected = MockMQService.isConnected
-      MockMQService.connect($scope.mqUrl, callback)
+      callback = =>
+        $scope.connected = MqService.isConnected()
+      MqService.connect($scope.mqUrl, callback)
 
     $scope.disconnectFromMQ = =>
       callback = =>
-        $scope.connected = MockMQService.isConnected
+        $scope.connected = MqService.isConnected()
         $scope.mqViews = {}
         $scope.selectedAction = ''
-      MockMQService.disconnect(callback)
+        $scope.$apply()
+      MqService.disconnect(callback)

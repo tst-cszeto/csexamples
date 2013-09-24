@@ -3,16 +3,17 @@
 angular.module('CSExamplesApp')
   .service 'MockMQService', ->
     @userName = 'MockMQUser'
-    @isConnected = false
+    @connected = false
+    @isConnected = -> @connected
     @connect = (url, callback) ->
       @url = url
       console.log("MockMQ=> connecting to: #{ url }")
-      @isConnected = true
+      @connected = true
       callback()
 
     @disconnect = (callback) ->
       console.log("MockMQ=> disconnecting from: #{ @url }")
-      @isConnected = false
+      @connected = false
       callback()
 
     @getChannelStatus = (channelName, callback) ->

@@ -9,10 +9,11 @@ describe 'Controller: MQExampleCtrl', () ->
   scope = {}
 
   # Initialize the controller and a mock scope
-  beforeEach inject ($controller, $rootScope) ->
+  beforeEach inject ($controller, $rootScope, MockMQService) ->
     scope = $rootScope.$new()
     MQExampleCtrl = $controller 'MQExampleCtrl', {
-      $scope: scope
+      $scope: scope,
+      MqService: MockMQService
     }
 
   it 'should initialize the scope with various defaults', ->

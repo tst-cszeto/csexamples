@@ -25,8 +25,9 @@ angular.module('TstCoreServices')
           callback(params)
           if runOnceOnly then delete @_callbacks[key]
 
-    @init = (mqUrl) ->
+    @connect = (mqUrl, callback) ->
       @ws = new WebSocket(mqUrl)
+      @openCallback = callback
 
       @ws.onopen = angular.bind(@, @onOpenHandler)
 
@@ -49,11 +50,20 @@ angular.module('TstCoreServices')
         callbacks.runCallbacks(message, runOnceOnly)
       )
 
-      @ws.onclose = (event) ->
-        console.log('on close', event)
+      @ws.onclose = (event) =>
+        if @closeCallback then @closeCallback(event)
+        @closeCallback = null
 
       @ws.onerror = (event) ->
         console.log('on error', event)
+
+    @disconnect = (callback) ->
+      @closeCallback = callback
+      @ws.close()
+      @ws = null
+
+    @isConnected = ->
+      return if @ws then @ws.readyState is WebSocket.OPEN else false
 
     @getMessageInfo = (message) ->
       messageInfo = {
@@ -75,6 +85,9 @@ angular.module('TstCoreServices')
       return messageInfo
 
     @onOpenHandler = (event) ->
+      if @openCallback then @openCallback(event)
+      @openCallback = null
+
       #this is pure magic...
       $rootScope.$apply(angular.bind(@, () ->
         @deferred.resolve())

@@ -17,9 +17,17 @@ angular.module('TstCoreServices')
       connector = @mqConnector || WebSocketConnector
       mqUrl = @mqUrl || DEFAULT_MQ_WS_URL
       userName = @userName || DEFAULT_USER
-      connector.init(mqUrl)
+      #connector.init(mqUrl)
 
       return {
+        connect: (mqUrl, callback) ->
+          mqUrl = mqUrl || @mqUrl
+          connector.connect(mqUrl, callback)
+
+        disconnect: (callback) -> connector.disconnect(callback)
+
+        isConnected: -> return connector.isConnected()
+
         listenChannel: (channel, consumerName=userName, isB64=0, callback) ->
           if not channel then return
           payload = {
