@@ -18,8 +18,8 @@ class @BaseWebSocketConnector
     @ws.onopen = (event) =>
       @onOpenHandler(event)
 
-    @ws.onmessage = angular.bind(@, (event) ->
-      message = angular.fromJson(event.data)
+    @ws.onmessage = (event) =>
+      message = JSON.parse(event.data)
       messageInfo = @getMessageInfo(message)
       messageType = messageInfo.type
       channel = messageInfo.channel
@@ -35,7 +35,6 @@ class @BaseWebSocketConnector
       callbacks = channelCallbacks[channel]
       if not callbacks then return
       callbacks.runCallbacks(message, runOnceOnly)
-    )
 
     @ws.onclose = (event) =>
       if @closeCallback
@@ -64,7 +63,7 @@ class @BaseWebSocketConnector
       messageInfo.type = 'oneTime'
     content = message.content
     try
-      content = angular.fromJson(message.content)
+      content = JSON.parse(message.content)
       if content.consumerNames
         messageInfo.type = 'status'
         messageInfo.channel = content.channel

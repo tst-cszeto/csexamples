@@ -23,7 +23,7 @@ class @BaseMqService
       isB64: isB64,
       channel: channel
     }
-    @connector.sendMessage(angular.toJson(payload))
+    @connector.sendMessage(JSON.stringify(payload))
     @connector.addCallback(channel, callback, 'message')
 
   stopListenChannel: (channel, callback) ->
@@ -31,7 +31,7 @@ class @BaseMqService
       action: 'stop_listen',
       channel: channel
     }
-    @connector.sendMessage(angular.toJson(payload))
+    @connector.sendMessage(JSON.stringify(payload))
     @connector.removeCallback(channel, callback, 'message')
 
   getChannelStatus: (channel, callback) ->
@@ -39,7 +39,7 @@ class @BaseMqService
       action: 'channel_status',
       channel: channel
     }
-    @connector.sendMessage(angular.toJson(payload))
+    @connector.sendMessage(JSON.stringify(payload))
     @connector.addCallback(channel, callback, 'oneTime')
 
   monitorChannelStatus: (channel, callback) ->
@@ -47,7 +47,7 @@ class @BaseMqService
       action: 'monitor_channel_status',
       channel: channel
     }
-    @connector.sendMessage(angular.toJson(payload))
+    @connector.sendMessage(JSON.stringify(payload))
     @connector.addCallback(channel, callback, 'status')
 
   stopMonitorChannelStatus: (channel, callback) ->
@@ -55,19 +55,19 @@ class @BaseMqService
       action: 'stop_monitor_channel_status',
       channel: channel
     }
-    @connector.sendMessage(angular.toJson(payload))
+    @connector.sendMessage(JSON.stringify(payload))
     @connector.removeCallback(channel, callback, 'status')
 
   sendMessages: (channel, messages, sourceName=@userName, isB64=0) ->
     if not (channel and messages) then return
-    if not angular.isArray(messages) then messages = [messages]
+    if messages not instanceof Array then messages = [messages]
     payload = {
       action: 'send',
       isB64: isB64,
       messages: @buildPayloadMessages(channel, messages, sourceName)
     }
     console.log('about to send message to connector', @connector, channel, messages, sourceName)
-    @connector.sendMessage(angular.toJson(payload))
+    @connector.sendMessage(JSON.stringify(payload))
 
   sendMessagesToChannels: (channelMessages, sourceName=@userName, isB64=0) ->
     if not channelMessages then return
@@ -81,7 +81,7 @@ class @BaseMqService
       isB64: isB64,
       messages: payloadMessages
     }
-    @connector.sendMessages(angular.toJson(payload))
+    @connector.sendMessages(JSON.stringify(payload))
 
   buildPayloadMessages: (channel, messages, sourceName) ->
     payloadMessages = []
