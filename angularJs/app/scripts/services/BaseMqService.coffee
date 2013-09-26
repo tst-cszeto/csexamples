@@ -66,7 +66,6 @@ class @BaseMqService
       isB64: isB64,
       messages: @buildPayloadMessages(channel, messages, sourceName)
     }
-    console.log('about to send message to connector', @connector, channel, messages, sourceName)
     @connector.sendMessage(JSON.stringify(payload))
 
   sendMessagesToChannels: (channelMessages, sourceName=@userName, isB64=0) ->

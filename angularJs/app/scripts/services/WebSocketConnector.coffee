@@ -1,9 +1,7 @@
 'use strict'
 
-@getBaseWebSocketConnectorInstance = (renamed$q, renamed$rootScope) ->
-  return new BaseWebSocketConnector(renamed$q, renamed$rootScope)
-
-@getBaseWebSocketConnectorInstance.$inject = ['$q', '$rootScope']
+@getBaseWebSocketConnectorInstance = ->
+  return new BaseWebSocketConnector()
 
 angular.module('TstCoreServices')
   .service 'WebSocketConnector', @getBaseWebSocketConnectorInstance
