@@ -23,6 +23,7 @@ angular.module('CSExamplesApp')
     $scope.connectToMQ = =>
       callback = =>
         $scope.connected = MqService.isConnected()
+        $scope.$apply()
       MqService.connect($scope.mqUrl, callback)
 
     $scope.disconnectFromMQ = =>

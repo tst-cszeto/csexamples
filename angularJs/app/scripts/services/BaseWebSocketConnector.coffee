@@ -1,8 +1,9 @@
 'use strict'
 
 class @BaseWebSocketConnector
-  constructor: (promiseService, scopeService)->
+  constructor: (promiseService=Q, scopeService)->
     @ws = null
+    @deferred = promiseService.defer()
     #if promiseService
     #  @deferred = promiseService.defer()
     #@deferred = $q.defer()
@@ -11,7 +12,7 @@ class @BaseWebSocketConnector
     @oneTimeCallbacks = {}
 
   connect: (mqUrl, callback) ->
-    console.log('attempting to connect to url', mqUrl)
+    console.log('attempting to connect to url', callback)
     @ws = new WebSocket(mqUrl)
     @openCallback = callback
 
@@ -72,10 +73,13 @@ class @BaseWebSocketConnector
     return messageInfo
 
   onOpenHandler: (event) ->
-    console.log('openned ws!', event)
+    console.log('openned ws!', @openCallback)
     if @openCallback
+      console.log('calling opencallback...')
       @openCallback(event)
       @openCallback = null
+
+    @deferred.resolve(event)
 
     #this is pure magic...
     #$rootScope.$apply(angular.bind(@, () ->
@@ -87,6 +91,10 @@ class @BaseWebSocketConnector
     if @ws.readyState is WebSocket.OPEN
       console.log('ws OK, sending...')
       @ws.send(payload)
+    else
+      console.log('not ready, setting up promise')
+      promise = @deferred.promise
+      promise.then => @ws.send(payload)
 
     ###
     else
