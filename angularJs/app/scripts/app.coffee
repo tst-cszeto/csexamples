@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('CSExamplesApp', ['TstCoreServices'])
+angular.module('CSExamplesApp', ['TstCoreServicesModule'])
   .config ($routeProvider) ->
     $routeProvider
       .when '/',
