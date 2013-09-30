@@ -9,12 +9,12 @@ angular.module('CSExamplesApp')
 
     $scope.monitorChannel = ->
       $scope.monitoring = true
-      $scope.statusCallback = (message) =>
+      statusCallback = (message) =>
         $scope.content= message.content
         $scope.$apply()
-      MqService.monitorChannelStatus($scope.channelName, $scope.statusCallback)
+      $scope.callbackId = MqService.monitorChannelStatus($scope.channelName, statusCallback)
 
     $scope.stopMonitorChannel = ->
       $scope.monitoring = false
       $scope.content = ""
-      MqService.stopMonitorChannelStatus($scope.channelName, $scope.statusCallback)
+      MqService.stopMonitorChannelStatus($scope.channelName, $scope.callbackId)

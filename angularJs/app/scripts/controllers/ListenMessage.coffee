@@ -9,12 +9,12 @@ angular.module('CSExamplesApp')
 
     $scope.listenMessage = ->
       $scope.listening = true
-      $scope.msgCallback = (message) =>
+      msgCallback = (message) =>
         $scope.content+= "\n#{message.content}"
         $scope.$apply()
-      MqService.listenChannel($scope.channelName, null, 0, $scope.msgCallback)
+      $scope.callbackId = MqService.listenChannel($scope.channelName, null, 0, msgCallback)
 
     $scope.stopListenMessage = ->
       $scope.listening = false
       $scope.content = ""
-      MqService.stopListenChannel($scope.channelName, $scope.msgCallback)
+      MqService.stopListenChannel($scope.channelName, $scope.callbackId)
