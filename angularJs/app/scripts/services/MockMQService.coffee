@@ -30,7 +30,7 @@ angular.module('CSExamplesApp')
     @sendMessages = (channelName, messages, sourceName=@userName, isB64=0) ->
       console.log("MockMQ=>sending msg: #{ messages } to MQ on channel: #{ channelName }")
 
-    @listenChannel = (channelName, consumerName=@userName, isB64=0, callback) ->
+    @listenChannel = (channelName, callback, consumerName=@userName, isB64=0) ->
       console.log("MockMQ=> listening for msgs on: #{ channelName }")
       fakeMsg = {
         content: "this a test message"
